@@ -4,3 +4,9 @@ webcolors-python
 Pillow-python
 funcparserlib-python
 docutils-python
+reportlab-python
+pep8
+python-mock
+nose-python
+funcsigs-python
+six
