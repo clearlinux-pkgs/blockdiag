@@ -4,7 +4,7 @@
 #
 Name     : blockdiag
 Version  : 1.5.3
-Release  : 2
+Release  : 3
 URL      : https://pypi.python.org/packages/source/b/blockdiag/blockdiag-1.5.3.tar.gz
 Source0  : https://pypi.python.org/packages/source/b/blockdiag/blockdiag-1.5.3.tar.gz
 Summary  : blockdiag generates block-diagram image from text
