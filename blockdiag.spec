@@ -4,14 +4,23 @@
 #
 Name     : blockdiag
 Version  : 1.5.3
-Release  : 12
-URL      : https://pypi.python.org/packages/source/b/blockdiag/blockdiag-1.5.3.tar.gz
-Source0  : https://pypi.python.org/packages/source/b/blockdiag/blockdiag-1.5.3.tar.gz
+Release  : 13
+URL      : http://pypi.debian.net/blockdiag/blockdiag-1.5.3.tar.gz
+Source0  : http://pypi.debian.net/blockdiag/blockdiag-1.5.3.tar.gz
 Summary  : blockdiag generates block-diagram image from text
 Group    : Development/Tools
 License  : Apache-2.0 BSD-3-Clause
 Requires: blockdiag-bin
 Requires: blockdiag-python
+Requires: Pillow
+Requires: docutils
+Requires: funcparserlib
+Requires: nose
+Requires: pep8
+Requires: python-mock
+Requires: reportlab
+Requires: setuptools
+Requires: webcolors
 BuildRequires : Pillow-python
 BuildRequires : docutils-python
 BuildRequires : funcparserlib-python
@@ -49,13 +58,6 @@ bin components for the blockdiag package.
 %package python
 Summary: python components for the blockdiag package.
 Group: Default
-Requires: Pillow-python
-Requires: docutils-python
-Requires: funcparserlib-python
-Requires: nose-python
-Requires: pep8
-Requires: reportlab-python
-Requires: webcolors-python
 
 %description python
 python components for the blockdiag package.
@@ -65,8 +67,11 @@ python components for the blockdiag package.
 %setup -q -n blockdiag-1.5.3
 
 %build
+export http_proxy=http://127.0.0.1:9/
+export https_proxy=http://127.0.0.1:9/
+export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1484534716
+export SOURCE_DATE_EPOCH=1503072951
 python2 setup.py build -b py2
 python3 setup.py build -b py3
 
@@ -74,12 +79,15 @@ python3 setup.py build -b py3
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-PYTHONPATH=%{buildroot}/usr/lib/python2.7/site-packages python2 setup.py test || :
+PYTHONPATH=%{buildroot}/usr/lib/python3.6/site-packages python3 setup.py test || :
 %install
-export SOURCE_DATE_EPOCH=1484534716
+export SOURCE_DATE_EPOCH=1503072951
 rm -rf %{buildroot}
 python2 -tt setup.py build -b py2 install --root=%{buildroot} --force
 python3 -tt setup.py build -b py3 install --root=%{buildroot} --force
+echo ----[ mark ]----
+cat %{buildroot}/usr/lib/python3*/site-packages/*/requires.txt || :
+echo ----[ mark ]----
 
 %files
 %defattr(-,root,root,-)
@@ -90,4 +98,5 @@ python3 -tt setup.py build -b py3 install --root=%{buildroot} --force
 
 %files python
 %defattr(-,root,root,-)
-/usr/lib/python*/*
+/usr/lib/python2*/*
+/usr/lib/python3*/*
