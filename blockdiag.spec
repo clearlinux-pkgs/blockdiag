@@ -4,7 +4,7 @@
 #
 Name     : blockdiag
 Version  : 1.5.4
-Release  : 23
+Release  : 24
 URL      : https://files.pythonhosted.org/packages/0f/bd/2bfaef223e428742313d7fba6edca1e6d21cd2867dbd758874f403d82cbf/blockdiag-1.5.4.tar.gz
 Source0  : https://files.pythonhosted.org/packages/0f/bd/2bfaef223e428742313d7fba6edca1e6d21cd2867dbd758874f403d82cbf/blockdiag-1.5.4.tar.gz
 Summary  : blockdiag generates block-diagram image from text
@@ -20,9 +20,12 @@ Requires: funcparserlib
 Requires: reportlab
 Requires: setuptools
 Requires: webcolors
+BuildRequires : Pillow
 BuildRequires : Pillow-python
 BuildRequires : buildreq-distutils3
+BuildRequires : docutils
 BuildRequires : docutils-python
+BuildRequires : funcparserlib
 BuildRequires : funcparserlib-python
 BuildRequires : funcsigs-python
 BuildRequires : nose-python
@@ -31,16 +34,20 @@ BuildRequires : pluggy
 BuildRequires : py-python
 BuildRequires : pytest
 BuildRequires : python-mock
+BuildRequires : reportlab
 BuildRequires : reportlab-python
+BuildRequires : setuptools
 BuildRequires : six
 BuildRequires : tox
 BuildRequires : virtualenv
+BuildRequires : webcolors
 BuildRequires : webcolors-python
 
 %description
-=====================
-debian-logo-256color-palettealpha.png
---------------------------------------
+`blockdiag` generate block-diagram image file from spec-text file.
+.. image:: https://drone.io/bitbucket.org/blockdiag/blockdiag/status.png
+:target: https://drone.io/bitbucket.org/blockdiag/blockdiag
+:alt: drone.io CI build status
 
 %package bin
 Summary: bin components for the blockdiag package.
@@ -79,26 +86,34 @@ python3 components for the blockdiag package.
 
 %prep
 %setup -q -n blockdiag-1.5.4
+cd %{_builddir}/blockdiag-1.5.4
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1541276995
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1576008877
+export GCC_IGNORE_WERROR=1
+export CFLAGS="$CFLAGS -fno-lto "
+export FCFLAGS="$CFLAGS -fno-lto "
+export FFLAGS="$CFLAGS -fno-lto "
+export CXXFLAGS="$CXXFLAGS -fno-lto "
+export MAKEFLAGS=%{?_smp_mflags}
 python3 setup.py build
 
 %check
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-PYTHONPATH=%{buildroot}/usr/lib/python3.7/site-packages python3 setup.py test || :
+PYTHONPATH=%{buildroot}$(python -c "import sys; print(sys.path[-1])") python setup.py test || :
 %install
+export MAKEFLAGS=%{?_smp_mflags}
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/blockdiag
-cp LICENSE %{buildroot}/usr/share/package-licenses/blockdiag/LICENSE
-cp src/blockdiag/tests/VLGothic/LICENSE %{buildroot}/usr/share/package-licenses/blockdiag/src_blockdiag_tests_VLGothic_LICENSE
-cp src/blockdiag/tests/VLGothic/LICENSE.en %{buildroot}/usr/share/package-licenses/blockdiag/src_blockdiag_tests_VLGothic_LICENSE.en
+cp %{_builddir}/blockdiag-1.5.4/LICENSE %{buildroot}/usr/share/package-licenses/blockdiag/2b8b815229aa8a61e483fb4ba0588b8b6c491890
+cp %{_builddir}/blockdiag-1.5.4/src/blockdiag/tests/VLGothic/LICENSE %{buildroot}/usr/share/package-licenses/blockdiag/af07a3a5218239724d3c4ad4f9e4746835129293
+cp %{_builddir}/blockdiag-1.5.4/src/blockdiag/tests/VLGothic/LICENSE.en %{buildroot}/usr/share/package-licenses/blockdiag/25d28628ff8ea8da700469e7b9ce06e5faecfed0
 python3 -tt setup.py build  install --root=%{buildroot}
 echo ----[ mark ]----
 cat %{buildroot}/usr/lib/python3*/site-packages/*/requires.txt || :
@@ -113,9 +128,9 @@ echo ----[ mark ]----
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/blockdiag/LICENSE
-/usr/share/package-licenses/blockdiag/src_blockdiag_tests_VLGothic_LICENSE
-/usr/share/package-licenses/blockdiag/src_blockdiag_tests_VLGothic_LICENSE.en
+/usr/share/package-licenses/blockdiag/25d28628ff8ea8da700469e7b9ce06e5faecfed0
+/usr/share/package-licenses/blockdiag/2b8b815229aa8a61e483fb4ba0588b8b6c491890
+/usr/share/package-licenses/blockdiag/af07a3a5218239724d3c4ad4f9e4746835129293
 
 %files python
 %defattr(-,root,root,-)
