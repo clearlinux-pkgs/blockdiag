@@ -1,5 +1,5 @@
 PKG_NAME := blockdiag
-URL = https://files.pythonhosted.org/packages/0f/bd/2bfaef223e428742313d7fba6edca1e6d21cd2867dbd758874f403d82cbf/blockdiag-1.5.4.tar.gz
+URL = https://files.pythonhosted.org/packages/38/22/2bf8818df57b1b992c4f8f05899e00a0093bcb46467f04ad12dc065abbb6/blockdiag-2.0.0.tar.gz
 ARCHIVES = 
 
 include ../common/Makefile.common
