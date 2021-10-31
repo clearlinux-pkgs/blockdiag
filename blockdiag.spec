@@ -4,7 +4,7 @@
 #
 Name     : blockdiag
 Version  : 2.0.1
-Release  : 43
+Release  : 44
 URL      : https://files.pythonhosted.org/packages/b6/1b/eab880ae3e6c7e24ae5adecc40ee7dd05c9ebb0dff6c39b52472844ce9b7/blockdiag-2.0.1.tar.gz
 Source0  : https://files.pythonhosted.org/packages/b6/1b/eab880ae3e6c7e24ae5adecc40ee7dd05c9ebb0dff6c39b52472844ce9b7/blockdiag-2.0.1.tar.gz
 Summary  : blockdiag generates block-diagram image from text
@@ -98,7 +98,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1603388259
+export SOURCE_DATE_EPOCH=1635707507
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$FFLAGS -fno-lto "
